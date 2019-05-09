@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Net;
+using AutoMapper;
+using Mastermind.Education.Services.ApplicationCore.Interfaces;
+using Mastermind.Education.Services.ApplicationCore.Services;
+using Mastermind.Education.Services.Data;
+using Mastermind.Education.Services.Infrastructure.Data.Repository;
+using Mastermind.Education.Services.Infrastructure.Mappings;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Mastermind.Education.Services
 {
@@ -24,7 +28,18 @@ namespace Mastermind.Education.Services
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper();
+            services.Configure<EducationSettings>(Configuration);
+            services.AddDbContext<EducationContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //Services
+            services.AddScoped<IEnrollmentService, EnrollmentService>();
+            services.AddScoped<IStudentService, StudentService>();
+
+            //Repositories
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+            services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +51,23 @@ namespace Mastermind.Education.Services
             }
 
             app.UseMvc();
+            app.UseExceptionHandler(
+                builder =>
+                {
+                    builder.Run(
+                    async context =>
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
+                        var error = context.Features.Get<IExceptionHandlerFeature>();
+                        if (error != null)
+                        {
+                            context.Response.AddApplicationError(error.Error.Message);
+                            await context.Response.WriteAsync(error.Error.Message).ConfigureAwait(false);
+                        }
+                    });
+                });
         }
     }
 }
