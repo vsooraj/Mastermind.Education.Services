@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Mastermind.Education.Services.ApplicationCore.Interfaces;
+using Mastermind.Education.Services.Entities;
+using Mastermind.Education.Services.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,13 +13,15 @@ namespace Mastermind.Education.Services.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EnrollmentController : ControllerBase
+    public class EnrollmentController : Controller
     {
         private readonly IEnrollmentService _enrollmentService;
+        private readonly IMapper _mapper;
 
-        public EnrollmentController(IEnrollmentService enrollmentService)
+        public EnrollmentController(IEnrollmentService enrollmentService, IMapper mapper)
         {
             _enrollmentService = enrollmentService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -26,12 +31,22 @@ namespace Mastermind.Education.Services.Controllers
             return Ok(items);
 
         }
-        //// POST api/values
-        //[HttpPost]
-        //public void Post([FromBody] int courseId, int studentId)
-        //{
-        //    _enrollmentService.CreateEnrollmentAsync(courseId, studentId);
-        //}
+        // POST: api/Enrollment
+        [HttpPost]
+        public IActionResult Post([FromBody]EnrollmentRequestViewModel enrollment)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+            Enrollment _newEnrollment = _mapper.Map<Enrollment>(enrollment);
+
+            _enrollmentService.AddAsync(_newEnrollment);
+
+            return Ok();
+        }
 
     }
 }

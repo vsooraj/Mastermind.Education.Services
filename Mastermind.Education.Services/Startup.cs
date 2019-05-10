@@ -35,11 +35,13 @@ namespace Mastermind.Education.Services
             //Services
             services.AddScoped<IEnrollmentService, EnrollmentService>();
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ICourseService, CourseService>();
 
             //Repositories
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
             services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

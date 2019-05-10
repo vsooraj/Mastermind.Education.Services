@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mastermind.Education.Services.ApplicationCore.Interfaces;
+using Mastermind.Education.Services.ApplicationCore.Specification;
 using Mastermind.Education.Services.Entities;
 using Mastermind.Education.Services.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -23,12 +24,23 @@ namespace Mastermind.Education.Services.Controllers
             _studentService = studentService;
             _mapper = mapper;
         }
+        //[HttpGet]
+        //public async Task<IActionResult> List()
+        //{
+        //    var items = await _studentService.ListAllAsync();
+        //    return Ok(items);
+        //}
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(string student)
         {
-            var items = await _studentService.ListAllAsync();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var tempStud = new Student() { Name=student };
+            Student _newStudent = _mapper.Map<Student>(tempStud);
+            var items = await _studentService.ListAsync(_newStudent);
             return Ok(items);
-
         }
 
         // GET: api/Student/5
@@ -37,6 +49,7 @@ namespace Mastermind.Education.Services.Controllers
         {
             return "student";
         }
+     
 
         // POST: api/Student
         [HttpPost]
@@ -46,10 +59,8 @@ namespace Mastermind.Education.Services.Controllers
             {
                 return BadRequest(ModelState);
             }
-
  
             Student _newStudent = _mapper.Map<Student>(student);
-
             _studentService.AddAsync(_newStudent);
 
             return Ok();
@@ -57,15 +68,32 @@ namespace Mastermind.Education.Services.Controllers
 
         // PUT: api/Student/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] StudentViewModel student)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Student _newStudent = _mapper.Map<Student>(student);
+            _studentService.UpdateAsync(_newStudent);
+
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-           
+            if (id<=0 )
+            {
+                return BadRequest();
+            }
+
+            var _newStudent = new Student() { Id = id };
+            _studentService.DeleteAsync(_newStudent);
+
+            return Ok();
         }
     }
 }

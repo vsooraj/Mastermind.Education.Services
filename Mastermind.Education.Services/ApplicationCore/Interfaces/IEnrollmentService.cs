@@ -1,4 +1,5 @@
 ﻿using Mastermind.Education.Services.ApplicationCore.Services;
+using Mastermind.Education.Services.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,10 +7,8 @@ namespace Mastermind.Education.Services.ApplicationCore.Interfaces
 {
     public interface IEnrollmentService
     {
-        //Task CreateEnrollmentAsync(int CourseId, int StudentId);
-        //Task ListAllAsync(int v, int itemsPage, int? brandFilterApplied, int? typesFilterApplied);
+        Task<Enrollment> AddAsync(Enrollment student);
         Task<IEnumerable<EnrollmentViewModel>> ListAllAsync();
-
-
+        Task DeleteAsync(Enrollment newEnrollment);
     }
 }
