@@ -1,5 +1,4 @@
 ﻿using Mastermind.Education.Services.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,21 +51,21 @@ namespace Mastermind.Education.Services.Data
         {
             return new List<Enrollment>()
             {
-                new Enrollment() { CourseId=2,StudentId=3},
-                new Enrollment() { CourseId=1,StudentId=2},
-                new Enrollment() { CourseId=2,StudentId=3},
-                new Enrollment() { CourseId=2,StudentId=2},
-                new Enrollment() { CourseId=2,StudentId=1},
-                new Enrollment() { CourseId=2,StudentId=2},
-                new Enrollment() { CourseId=2,StudentId=1},
-                new Enrollment() { CourseId=1,StudentId=1},
-                new Enrollment() { CourseId=1,StudentId=2},
-                new Enrollment() { CourseId=2,StudentId=3},
-                new Enrollment() { CourseId=1,StudentId=2},
-                new Enrollment() { CourseId=2,StudentId=1},
-                new Enrollment() { CourseId=3,StudentId=3},
-                new Enrollment() { CourseId=3,StudentId=2},
-                new Enrollment() { CourseId=3,StudentId=1}
+                new Enrollment() { CourseId=2,StudentId=3,Grade="A"},
+                new Enrollment() { CourseId=1,StudentId=2,Grade="A"},
+                new Enrollment() { CourseId=2,StudentId=3,Grade="A"},
+                new Enrollment() { CourseId=2,StudentId=2,Grade="A"},
+                new Enrollment() { CourseId=2,StudentId=1,Grade="A"},
+                new Enrollment() { CourseId=2,StudentId=2,Grade="A"},
+                new Enrollment() { CourseId=2,StudentId=1,Grade="A"},
+                new Enrollment() { CourseId=1,StudentId=1,Grade="A"},
+                new Enrollment() { CourseId=1,StudentId=2,Grade="A"},
+                new Enrollment() { CourseId=2,StudentId=3,Grade="A"},
+                new Enrollment() { CourseId=1,StudentId=2,Grade="A"},
+                new Enrollment() { CourseId=2,StudentId=1,Grade="A"},
+                new Enrollment() { CourseId=3,StudentId=3,Grade="A"},
+                new Enrollment() { CourseId=3,StudentId=2,Grade="A"},
+                new Enrollment() { CourseId=3,StudentId=1,Grade="A"}
 
             };
         }

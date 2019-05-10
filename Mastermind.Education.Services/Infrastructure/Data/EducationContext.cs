@@ -1,10 +1,6 @@
 ﻿using Mastermind.Education.Services.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mastermind.Education.Services.Data
 {
@@ -15,11 +11,11 @@ namespace Mastermind.Education.Services.Data
 
         }
         protected override void OnModelCreating(ModelBuilder builder)
-        {          
+        {
             builder.Entity<Course>(ConfigureCourse);
             builder.Entity<Enrollment>(ConfigureEnrollment);
             builder.Entity<Student>(ConfigureStudent);
-        }      
+        }
 
         private void ConfigureCourse(EntityTypeBuilder<Course> builder)
         {
@@ -43,6 +39,7 @@ namespace Mastermind.Education.Services.Data
                 .IsRequired(true);
             builder.Property(c => c.StudentId)
               .IsRequired(true);
+            builder.Property(c => c.Grade);
             builder.HasOne(c => c.Course)
               .WithMany()
               .HasForeignKey(c => c.CourseId);
