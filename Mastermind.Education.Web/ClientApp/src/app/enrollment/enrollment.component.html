@@ -1,0 +1,140 @@
+
+<h3>New Enrollment</h3>
+<form>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Student</label>
+            <select class="form-control">
+              <option>Student 1</option>
+              <option>Student 2</option>
+              <option>Student 3</option>
+              <option>Student 4</option>
+              <option>Student 5</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Course</label>
+            <select class="form-control">
+              <option>Course 1</option>
+              <option>Course 2</option>
+              <option>Course 3</option>
+              <option>Course 4</option>
+              <option>Course 5</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">NoOfDays</label>
+            <select class="form-control">
+              <option>10</option>
+              <option>20</option>
+              <option>30</option>
+              <option>40</option>
+              <option>50</option>
+              <option>60</option>
+              <option>70</option>
+              <option>80</option>
+              <option>90</option>
+              <option>100</option>
+              <option>110</option>
+              <option>120</option>
+              <option>130</option>
+              <option>140</option>
+              <option>150</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Grade</label>
+            <select class="form-control">
+              <option>Grade A</option>
+              <option>Grade B</option>
+              <option>Grade C</option>
+              <option>Grade D</option>
+              <option>Grade F</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-default">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h3>Enrollment List</h3>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form class="form-inline">
+            <div class="row">
+              <div class="col-xs-3">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="name" placeholder="Name">
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <div class="form-group">
+                  <label for="course">Course</label>
+                  <select class="form-control" id="course" placeholder="Name">
+                    <option>Course 1</option>
+                    <option>Course 2</option>
+                    <option>Course 3</option>
+                    <option>Course 4</option>
+                    <option>Course 5</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-xs-6">
+                <button type="submit" class="btn btn-default">Search</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">          
+          <table class='table' *ngIf="enrollments">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th ng-hide="true" style="display:none">StudentId</th>
+                <th>Student</th>
+                <th ng-hide="true" style="display:none">CourseId</th>
+                <th>Course</th>
+                <th>NoOfDays</th>
+                <th>Grade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let enrollment of enrollments">
+                <td>{{ enrollment.id }}</td>
+                <td ng-hide="true" style="display:none">{{ enrollment.courseId }}</td>
+                <td>{{ enrollment.course }}</td>
+                <td>{{ enrollment.noOfDays }}</td>
+                <td ng-hide="true" style="display:none">{{ enrollment.studentId }}</td>
+                <td>{{ enrollment.student }}</td>
+                <td>{{ enrollment.grade }}</td>
+                <td>Edit</td>
+                <td>Delete</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -52,7 +52,7 @@ namespace Mastermind.Education.Services
                 app.UseDeveloperExceptionPage();
             }
             app.UseCors(
-                options => options.WithOrigins("http://localhost:64117").AllowAnyMethod()
+                options => options.WithOrigins("http://localhost:53021").AllowAnyMethod()
             );
             app.UseMvc();
             app.UseExceptionHandler(
