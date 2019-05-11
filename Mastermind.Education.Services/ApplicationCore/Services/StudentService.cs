@@ -1,9 +1,7 @@
 ﻿using Mastermind.Education.Services.ApplicationCore.Interfaces;
 using Mastermind.Education.Services.ApplicationCore.Specification;
 using Mastermind.Education.Services.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mastermind.Education.Services.ApplicationCore.Services
@@ -24,20 +22,20 @@ namespace Mastermind.Education.Services.ApplicationCore.Services
         }
         public async Task<IEnumerable<Student>> ListAsync(Student student)
         {
-            var spec = new Specification<Student>(x => x.Name == student.Name);
-            IEnumerable<Student> tempstudent = await _studentRepository.ListAsync(spec);
+            var spec = new Specification<Student>(x => x.Name.Contains(student.Name) && x.Id == student.Id);
+            IEnumerable<Student> tempStudent = await _studentRepository.ListAsync(spec);
 
-            return tempstudent;
+            return tempStudent;
         }
         public async Task<Student> AddAsync(Student student)
         {
-           var tempStudent =  await _studentRepository.AddAsync(student);
+            var tempStudent = await _studentRepository.AddAsync(student);
 
             return tempStudent;
         }
         public async Task UpdateAsync(Student student)
         {
-             await _studentRepository.UpdateAsync(student);
+            await _studentRepository.UpdateAsync(student);
 
         }
 

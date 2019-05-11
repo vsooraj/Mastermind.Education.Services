@@ -1,10 +1,8 @@
-﻿using System.Net;
-using AutoMapper;
+﻿using AutoMapper;
 using Mastermind.Education.Services.ApplicationCore.Interfaces;
 using Mastermind.Education.Services.ApplicationCore.Services;
 using Mastermind.Education.Services.Data;
 using Mastermind.Education.Services.Infrastructure.Data.Repository;
-using Mastermind.Education.Services.Infrastructure.Mappings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net;
 
 namespace Mastermind.Education.Services
 {
@@ -28,6 +27,7 @@ namespace Mastermind.Education.Services
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddAutoMapper();
             services.Configure<EducationSettings>(Configuration);
             services.AddDbContext<EducationContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
@@ -51,7 +51,9 @@ namespace Mastermind.Education.Services
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(
+                options => options.WithOrigins("http://localhost:64117").AllowAnyMethod()
+            );
             app.UseMvc();
             app.UseExceptionHandler(
                 builder =>

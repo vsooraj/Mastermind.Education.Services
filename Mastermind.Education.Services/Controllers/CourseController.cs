@@ -10,21 +10,21 @@ namespace Mastermind.Education.Services.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentController : Controller
+    public class CourseController : ControllerBase
     {
-        private readonly IStudentService _studentService;
+        private readonly ICourseService _courseService;
         private readonly IMapper _mapper;
 
-        public StudentController(IStudentService studentService, IMapper mapper)
+        public CourseController(ICourseService courseService, IMapper mapper)
         {
-            _studentService = studentService;
+            _courseService = courseService;
             _mapper = mapper;
         }
         // GET api/student
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var items = await _studentService.ListAllAsync();
+            var items = await _courseService.ListAllAsync();
             return Ok(items);
         }
 
@@ -36,39 +36,39 @@ namespace Mastermind.Education.Services.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var tempStud = new Student() { Id = id, Name = name };
-            var items = await _studentService.ListAsync(tempStud);
+            var tempCourse = new Course() { Id = id, Name = name };
+            var items = await _courseService.ListAsync(tempCourse);
             return Ok(items);
         }
 
         // POST: api/Student
         [HttpPost]
-        public IActionResult Post([FromBody]StudentViewModel student)
+        public IActionResult Post([FromBody]CourseViewModel course)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Student _newStudent = _mapper.Map<Student>(student);
-            _studentService.AddAsync(_newStudent);
+            Course _newCourse = _mapper.Map<Course>(course);
+            _courseService.AddAsync(_newCourse);
 
-            return Ok(_newStudent);
+            return Ok(_newCourse);
         }
 
         // PUT: api/Student/5
         [HttpPut("{id}")]
-        public IActionResult Put(int? id, [FromBody] StudentViewModel student)
+        public IActionResult Put(int? id, [FromBody] CourseViewModel course)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var tempStud = new Student() { Id = Convert.ToInt32(id), Name = student.Name };
-            Student _newStudent = _mapper.Map<Student>(tempStud);
-            _studentService.UpdateAsync(_newStudent);
+            var tempCourse = new Course() { Id = Convert.ToInt32(id), Name = course.Name };
+            Course _newCourse = _mapper.Map<Course>(tempCourse);
+            _courseService.UpdateAsync(_newCourse);
 
-            return Ok(_newStudent);
+            return Ok(_newCourse);
         }
 
         // DELETE: api/Student/5
@@ -80,8 +80,8 @@ namespace Mastermind.Education.Services.Controllers
             {
                 return BadRequest();
             }
-            var _newStudent = new Student() { Id = Convert.ToInt32(id) };
-            _studentService.DeleteAsync(_newStudent);
+            var _newCourse = new Course() { Id = Convert.ToInt32(id) };
+            _courseService.DeleteAsync(_newCourse);
 
             return Ok();
         }

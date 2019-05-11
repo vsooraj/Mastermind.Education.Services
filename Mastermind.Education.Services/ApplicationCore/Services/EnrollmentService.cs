@@ -17,7 +17,7 @@ namespace Mastermind.Education.Services.ApplicationCore.Services
 
         public EnrollmentService(IAsyncRepository<Enrollment> enrollmentRepository,
             IAsyncRepository<Student> studentRepository,
-            IAsyncRepository<Course>  courseRepository,
+            IAsyncRepository<Course> courseRepository,
             IMapper mapper)
         {
             _enrollmentRepository = enrollmentRepository;
@@ -30,7 +30,7 @@ namespace Mastermind.Education.Services.ApplicationCore.Services
             var tempEnrollment = await _enrollmentRepository.AddAsync(enrollment);
 
             return tempEnrollment;
-            
+
         }
 
         public async Task<IEnumerable<EnrollmentViewModel>> ListAllAsync()
@@ -44,7 +44,7 @@ namespace Mastermind.Education.Services.ApplicationCore.Services
                    e.Id,
                    e.CourseId,
                    Course = e.Course.Name,
-                   NoOfDays= e.Course.NoOfDays,
+                   NoOfDays = e.Course.NoOfDays,
                    e.StudentId,
                    Student = e.Student.Name,
                    e.Grade

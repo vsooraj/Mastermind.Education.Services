@@ -1,7 +1,5 @@
 ﻿using Mastermind.Education.Services.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mastermind.Education.Services.ApplicationCore.Interfaces
@@ -10,5 +8,8 @@ namespace Mastermind.Education.Services.ApplicationCore.Interfaces
     {
         Task<IEnumerable<Course>> ListAllAsync();
         Task<Course> AddAsync(Course course);
+        Task<IEnumerable<Course>> ListAsync(Course course);
+        Task UpdateAsync(Course course);
+        Task DeleteAsync(Course course);
     }
 }
