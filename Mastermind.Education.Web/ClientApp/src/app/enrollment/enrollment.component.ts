@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SaveEnrollment, Enrollment } from './../models/enrollment';
 
 import { EnrollmentService } from './../services/enrollment.service';
-import { ToastyService } from "ng2-toasty";
+
 
 
 @Component({
@@ -56,25 +56,26 @@ export class EnrollmentComponent implements OnInit {
   //  if (this.enrollment.id)
   //    sources.push(this.enrollmentService.getEnrollment(this.enrollment.id));    
   //}
-  //submit() {
-  //  if (this.enrollment.id) {
-  //    this.enrollmentService.update(this.enrollment)
-  //      .subscribe(x => {
-  //        this.toastyService.success({
-  //          title: 'Success',
-  //          msg: 'The Enrollment was sucessfully updated.',
-  //          theme: 'bootstrap',
-  //          showClose: true,
-  //          timeout: 5000
-  //        });
-  //      });
-  //  }
-  //  else {
-  //    this.enrollmentService.create(this.enrollment)
-  //      .subscribe(x => console.log(x));
+  submit() {
+    if (this.enrollment.id) {
+      this.enrollmentService.update(this.enrollment)
+        .subscribe(x => {
+          x => console.log(x);
+          //this.toastyService.success({
+          //  title: 'Success',
+          //  msg: 'The Enrollment was sucessfully updated.',
+          //  theme: 'bootstrap',
+          //  showClose: true,
+          //  timeout: 5000
+          //});
+        });
+    }
+    else {
+      this.enrollmentService.create(this.enrollment)
+        .subscribe(x => console.log(x));
 
-  //  }
-  //}
+    }
+  }
 
   //delete() {
   //  if (confirm("Are you sure?")) {

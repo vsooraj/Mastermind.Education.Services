@@ -18,9 +18,11 @@ import { EnrollmentComponent } from './enrollment/enrollment.component';
 import { CourseService } from './services/course.service';
 import { EnrollmentService } from './services/enrollment.service';
 import { StudentService } from './services/student.service';
+import { ToastyModule } from 'ng2-toasty';
 
 
 @NgModule({
+  bootstrap: [AppComponent],
   declarations: [
     AppComponent,
     NavMenuComponent,
@@ -32,6 +34,8 @@ import { StudentService } from './services/student.service';
     StudentComponent,
   ],
   imports: [
+    ToastyModule.forRoot(),
+    
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     HttpModule,
@@ -46,7 +50,7 @@ import { StudentService } from './services/student.service';
       { path: 'enrollment', component: EnrollmentComponent },
     ])
   ],
-  providers: [CourseService,EnrollmentService, StudentService],
-  bootstrap: [AppComponent]
+  providers: [CourseService,EnrollmentService, StudentService]
+  
 })
 export class AppModule { }

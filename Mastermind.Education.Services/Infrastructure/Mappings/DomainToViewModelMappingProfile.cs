@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using Mastermind.Education.Services.Entities;
 using Mastermind.Education.Services.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mastermind.Education.Services.Infrastructure.Mappings
 {
@@ -19,6 +15,7 @@ namespace Mastermind.Education.Services.Infrastructure.Mappings
             .ReverseMap();
 
             CreateMap<StudentViewModel, Student>().ReverseMap();
+            CreateMap<CourseViewModel, Course>().ReverseMap();
 
         }
     }
