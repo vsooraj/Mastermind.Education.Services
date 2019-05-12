@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Mastermind.Education.Services.ApplicationCore.Interfaces;
+using Mastermind.Education.Services.ApplicationCore.Specification;
 using Mastermind.Education.Services.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,14 @@ namespace Mastermind.Education.Services.ApplicationCore.Services
         public async Task<Enrollment> AddAsync(Enrollment enrollment)
         {
             var tempEnrollment = await _enrollmentRepository.AddAsync(enrollment);
-
             return tempEnrollment;
 
+        }
+        public async Task<IEnumerable<Enrollment>> ListAsync(Enrollment enrollment)
+        {
+            var spec = new Specification<Enrollment>(x => x.Student.Name.Contains(enrollment.Student.Name) || x.Course.Id == enrollment.CourseId);
+            IEnumerable<Enrollment> tempEnrollment = await _enrollmentRepository.ListAsync(spec);
+            return tempEnrollment;
         }
 
         public async Task<IEnumerable<EnrollmentViewModel>> ListAllAsync()
