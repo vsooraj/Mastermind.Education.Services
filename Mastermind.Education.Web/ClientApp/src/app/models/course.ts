@@ -9,3 +9,6 @@ export interface SaveCourse{
   name: string,
   noOfDays: number
 }
+export interface Grade {
+  id: string;
+}

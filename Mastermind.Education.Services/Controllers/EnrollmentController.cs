@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Mastermind.Education.Services.ApplicationCore.Interfaces;
 using Mastermind.Education.Services.Entities;
 using Mastermind.Education.Services.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace Mastermind.Education.Services.Controllers
 {
@@ -44,6 +41,20 @@ namespace Mastermind.Education.Services.Controllers
             Enrollment _newEnrollment = _mapper.Map<Enrollment>(enrollment);
 
             _enrollmentService.AddAsync(_newEnrollment);
+
+            return Ok();
+        }
+        // DELETE: api/Student/5
+        [HttpDelete("{Id}")]
+        public IActionResult Delete(int? id)
+        {
+
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            var _newEnrollment = new Enrollment() { Id = Convert.ToInt32(id) };
+            _enrollmentService.DeleteAsync(_newEnrollment);
 
             return Ok();
         }

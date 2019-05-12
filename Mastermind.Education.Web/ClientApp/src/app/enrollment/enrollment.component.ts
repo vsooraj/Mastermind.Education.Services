@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SaveEnrollment, Enrollment } from './../models/enrollment';
 
 import { EnrollmentService } from './../services/enrollment.service';
+import { Student } from '../models/student';
+import { Course, Grade } from '../models/course';
 
 
 
@@ -14,10 +16,34 @@ import { EnrollmentService } from './../services/enrollment.service';
   templateUrl: './enrollment.component.html'
 })
 export class EnrollmentComponent implements OnInit {
-  grade: any[];
-  course: any[];
+
+  grades: Grade[] = [
+    { id: "A"},
+    { id: "B"},
+    { id: "C"}
+  ];
+
+  courses: Course[] = [
+    { id: 1, name: "course1", noOfDays:10},
+    { id: 2, name: "course1", noOfDays:10},
+    { id: 3, name: "course1", noOfDays:10}
+  ];
+
+
+  students: Student[] = [
+    { id: 1, name: "student 1" },
+    { id: 2, name: "student 2" },
+    { id: 3, name: "student 3" }
+  ];
+  noOfDays: any[] = [
+    { id: 10, title: " 10" },
+    { id: 20, title: " 20" },
+    { id: 30, title: " 30" }
+  ];
+
+
   enrollment: SaveEnrollment = {
-    id: 0,
+    id: null,
     courseId: 0,
     studentId: 0,
     noOfDays: 30,
@@ -27,24 +53,11 @@ export class EnrollmentComponent implements OnInit {
 
   public enrollments: Enrollment[];
 
-  //constructor(
-  //  private route: ActivatedRoute,
-  //  private router: Router,
-  //  private enrollmentService: EnrollmentService,
-  //  private toastyService: ToastyService,
-  //  http: HttpClient,
-  //  @Inject('BASE_URL') baseUrl: string
-  //) {
-  //  http.get<Enrollment[]>('http://localhost:58789/api/enrollment/').subscribe(result => {
-  //    this.enrollments = result;
-  //  }, error => console.error(error));
-  //}
   constructor(private enrollmentService: EnrollmentService) { }
   ngOnInit() {
-    this.enrollmentService.getEnrollments().subscribe(enrollments => {
-      this.enrollments = enrollments;
-      console.log(this.enrollments);
-    });
+    this.fetchData();
+    //this.grades = this.enrollmentService.getGrades();
+    //this.courses = this.enrollmentService.getCourses();
   }
   //ngOnInit() {
   //  var sources = [
@@ -56,7 +69,7 @@ export class EnrollmentComponent implements OnInit {
   //  if (this.enrollment.id)
   //    sources.push(this.enrollmentService.getEnrollment(this.enrollment.id));    
   //}
-  submit() {
+  onSubmit() {
     if (this.enrollment.id) {
       this.enrollmentService.update(this.enrollment)
         .subscribe(x => {
@@ -81,10 +94,31 @@ export class EnrollmentComponent implements OnInit {
   //  if (confirm("Are you sure?")) {
   //    this.enrollmentService.delete(this.enrollment.id)
   //      .subscribe(x => {
-  //        this.router.navigate(['/home']);
+  //        console.log(this.enrollments);
+  //        //this.router.navigate(['/home']);
   //      });
+  //    this.fetchData();
   //  }
   //}
+
+  deleteRow(index: number) {
+    this.enrollment.id = index;
+
+    if (confirm("Are you sure?")) {
+      this.enrollmentService.delete(this.enrollment.id)
+        .subscribe(x => {
+          console.log(this.enrollments);
+          //this.router.navigate(['/home']);
+        });
+      this.fetchData();
+    }
+  }
+  fetchData() {
+    this.enrollmentService.getEnrollments().subscribe(enrollments => {
+      this.enrollments = enrollments;
+      console.log(this.enrollments);
+    });
+  }
 }
 
 
