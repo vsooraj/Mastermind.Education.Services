@@ -19,7 +19,6 @@
           <div class="form-group">
             <label for="name">Course</label>
             <select class="form-control" [(ngModel)]="enrollment.courseId" name="courseId">
-              <option value="0">--All--</option>
               <option *ngFor="let course of courses" value={{course.id}}>
                 {{course.name}}
               </option>
@@ -32,7 +31,6 @@
           <div class="form-group">
             <label for="name">NoOfDays</label>
             <select class="form-control" [(ngModel)]="enrollment.noOfDays" name="noOfDays">
-              <option value="0">--All--</option>
               <option *ngFor="let noOfDay of noOfDays" value={{noOfDay.id}}>
                 {{noOfDay.title}}
               </option>
@@ -43,7 +41,6 @@
           <div class="form-group">
             <label for="name">Grade</label>
             <select class="form-control" [(ngModel)]="enrollment.grade" name="grade">
-              <option value="0">--All--</option>
               <option *ngFor="let grade of grades" value={{grade.id}}>
                 {{grade.id}}
               </option>

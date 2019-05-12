@@ -24,21 +24,21 @@ export class EnrollmentComponent implements OnInit {
   ];
 
   courses: Course[] = [
-    { id: 1, name: "course1", noOfDays:10},
-    { id: 2, name: "course1", noOfDays:10},
-    { id: 3, name: "course1", noOfDays:10}
+    { id: 1, name: "C#", noOfDays:30},
+    { id: 2, name: "Angualr", noOfDays:60},
+    { id: 3, name: ".NET Core", noOfDays:90}
   ];
-
-
+  
+   
   students: Student[] = [
-    { id: 1, name: "student 1" },
-    { id: 2, name: "student 2" },
-    { id: 3, name: "student 3" }
+    { id: 1, name: "Jon Doe" },
+    { id: 2, name: "Jane Doe" },
+    { id: 3, name: "Willy Doe" }
   ];
   noOfDays: any[] = [
-    { id: 10, title: " 10" },
-    { id: 20, title: " 20" },
-    { id: 30, title: " 30" }
+    { id: 30, title: " 30" },
+    { id: 60, title: " 60" },
+    { id: 90, title: " 90" }
   ];
 
 
