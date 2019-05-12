@@ -27,8 +27,13 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\app\course\" />
     <Folder Include="ClientApp\src\app\enrollment\" />
-    <Folder Include="ClientApp\src\app\models\" />
     <Folder Include="ClientApp\src\app\student\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ClientApp\src\app\services\enrollment.service.js.map">
+      <DependentUpon>enrollment.service.js</DependentUpon>
+    </None>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

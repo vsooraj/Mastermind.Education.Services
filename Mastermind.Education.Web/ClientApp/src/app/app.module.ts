@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination'; 
 
@@ -14,22 +15,28 @@ import { StudentComponent } from './student/student.component';
 import { CourseComponent } from './course/course.component';
 import { EnrollmentComponent } from './enrollment/enrollment.component';
 
+import { CourseService } from './services/course.service';
+import { EnrollmentService } from './services/enrollment.service';
+import { StudentService } from './services/student.service';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent,
-    StudentComponent,
+    FetchDataComponent, 
     CourseComponent,
     EnrollmentComponent,
+    StudentComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    HttpModule,
     FormsModule,
-    NgxPaginationModule,//add here
+    NgxPaginationModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
@@ -39,7 +46,7 @@ import { EnrollmentComponent } from './enrollment/enrollment.component';
       { path: 'enrollment', component: EnrollmentComponent },
     ])
   ],
-  providers: [],
+  providers: [CourseService,EnrollmentService, StudentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

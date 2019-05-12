@@ -1,30 +1,30 @@
-import { SaveStudent } from './../models/student';
+import { SaveCourse } from './../models/course';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
 
 @Injectable()
-export class StudentService {
+export class CourseService {
   private baseUrl: string = environment.baseUrl;
   constructor(private http: Http) { }
 
-  create(student) {
-    return this.http.post(this.baseUrl +'/student', student)
+  create(course) {
+    return this.http.post(this.baseUrl + '/course', course)
       .map(res => res.json());
   }
-  getStudents() {
-    return this.http.get(this.baseUrl +'/student' )
+  getCourses() {
+    return this.http.get(this.baseUrl +'/course' )
       .map(res => res.json());
   }
 
-  update(student: SaveStudent) {
-    return this.http.put(this.baseUrl +'/student/' + student.id, student)
+  update(course: SaveCourse) {
+    return this.http.put(this.baseUrl + '/course/' + course.id, course)
       .map(res => res.json());
   }
 
   delete(id) {
-    return this.http.delete(this.baseUrl +'/student/' + id)
+    return this.http.delete(this.baseUrl +'/course/' + id)
       .map(res => res.json());
   }
 }

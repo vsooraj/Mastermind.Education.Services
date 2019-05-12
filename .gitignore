@@ -259,3 +259,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/Mastermind.Education.Web/ClientApp/src/app/services/course.service.js.map
+/Mastermind.Education.Web/ClientApp/src/app/services/course.service.js
+/Mastermind.Education.Web/ClientApp/src/app/services/enrollment.service.js
+/Mastermind.Education.Web/ClientApp/src/app/services/enrollment.service.js.map

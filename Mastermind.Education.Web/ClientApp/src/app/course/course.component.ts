@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CourseService } from '../services/course.service';
+import { Course } from '../models/course';
 
 @Component({
   selector: 'app-course-component',
@@ -8,17 +10,14 @@ import { HttpClient } from '@angular/common/http';
 export class CourseComponent {
   public courses: Course[];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Course[]>('http://localhost:58789/api/course/').subscribe(result => {
-      this.courses = result;
-    }, error => console.error(error));
-  }
+  constructor(private courseService: CourseService) { }
+
+ngOnInit() {
+  this.courseService.getCourses().subscribe(courses => {
+    this.courses = courses;
+    console.log(this.courses);
+  });
+}
 }
 
-interface Course {
-  id: number;
-  name: string;
-  noOfDays: number;
-
-}
 
