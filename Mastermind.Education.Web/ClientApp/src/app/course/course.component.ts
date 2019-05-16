@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 
 import { CourseService } from '../services/course.service';
 import { Course, SaveCourse } from '../models/course';
@@ -9,7 +9,7 @@ import { Course, SaveCourse } from '../models/course';
   selector: 'app-course-component',
   templateUrl: './course.component.html'
 })
-export class CourseComponent {
+export class CourseComponent implements OnInit{
   public courses: Course[];
 
   course: SaveCourse = {
@@ -18,7 +18,10 @@ export class CourseComponent {
     noOfDays: 0
   };
 
-  constructor(private courseService: CourseService) { }
+  constructor(
+    private courseService: CourseService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.fetchData();
@@ -27,7 +30,6 @@ export class CourseComponent {
   fetchData() {
     this.courseService.getCourses().subscribe(courses => {
       this.courses = courses;
-      console.log(this.courses);
     });
   }
 
@@ -43,29 +45,40 @@ export class CourseComponent {
           //  showClose: true,
           //  timeout: 5000
           //});
+          this.fetchData();
+          this.router.navigate(['/course']);
         });
       this.fetchData();
     }
     else {
       this.courseService.create(this.course).subscribe(courses => {
-        this.courses = courses;
-        console.log(this.courses);
+        this.courses = courses;       
+        this.fetchData();
+        this.router.navigate(['/course']);
       });
-      this.fetchData();
+      
     }  
   }
   deleteRow(index: number) {
     this.course.id = index;
    
-    if (confirm("Are you sure?")) {
-      this.courseService.delete(this.course.id)
-        .subscribe(x => {
-          console.log(this.courses);
-          //this.router.navigate(['/home']);
-        });
-      this.fetchData();
-    }
+     if (confirm("Are you sure?")) {
+        this.courseService.delete(this.course.id)
+          .subscribe(courses => {           
+            this.router.navigate(['/course']);
+          });
+      
+     }
   }
+
+  //delete() {
+  //  if (confirm("Are you sure?")) {
+  //    this.vehicleService.delete(this.vehicle.id)
+  //      .subscribe(x => {
+  //        this.router.navigate(['/home']);
+  //      });
+  //  }
+  //}
 }
 
 

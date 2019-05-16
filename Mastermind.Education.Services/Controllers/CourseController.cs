@@ -73,7 +73,7 @@ namespace Mastermind.Education.Services.Controllers
 
         // DELETE: api/Student/5
         [HttpDelete("{Id}")]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
 
             if (id == null)
@@ -81,9 +81,9 @@ namespace Mastermind.Education.Services.Controllers
                 return BadRequest();
             }
             var _newCourse = new Course() { Id = Convert.ToInt32(id) };
-            _courseService.DeleteAsync(_newCourse);
+            await _courseService.DeleteAsync(_newCourse);
 
-            return Ok();
+            return Ok(id);
         }
     }
 }

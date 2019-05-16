@@ -8,8 +8,8 @@ namespace Mastermind.Education.Services.ApplicationCore.Services
 {
     public class StudentService : IStudentService
     {
-        public readonly IAsyncRepository<Student> _studentRepository;
-        public StudentService(IAsyncRepository<Student> studentRepository)
+        public readonly IStudentRepository _studentRepository;
+        public StudentService(IStudentRepository studentRepository)
         {
             _studentRepository = studentRepository;
         }

@@ -18,8 +18,9 @@
                 <input type="text" class="form-control" id="noOfDays" placeholder="noOfDays" [(ngModel)]="course.noOfDays" name="noOfDays">
               </label>
             </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="reset" class="btn btn-primary">Clear</button>
+          </div>
         </div>
       </div>
     </div>
@@ -40,7 +41,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let course of courses  | paginate: { itemsPerPage: 8, currentPage: p }; let i = index">
+              <tr *ngFor="let course of courses  | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
                 <td>{{ course.id }}</td>
                 <td>{{ course.name }}</td>
                 <td>{{ course.noOfDays }}</td>

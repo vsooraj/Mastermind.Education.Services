@@ -10,15 +10,15 @@ namespace Mastermind.Education.Services.ApplicationCore.Services
 {
     public class EnrollmentService : IEnrollmentService
     {
-        private readonly IAsyncRepository<Enrollment> _enrollmentRepository;
+        private readonly IEnrollmentRepository _enrollmentRepository;
 
-        public readonly IAsyncRepository<Student> _studentRepository;
-        public readonly IAsyncRepository<Course> _courseRepository;
+        public readonly IStudentRepository _studentRepository;
+        public readonly ICourseRepository _courseRepository;
         private readonly IMapper _mapper;
 
-        public EnrollmentService(IAsyncRepository<Enrollment> enrollmentRepository,
-            IAsyncRepository<Student> studentRepository,
-            IAsyncRepository<Course> courseRepository,
+        public EnrollmentService(IEnrollmentRepository enrollmentRepository,
+            IStudentRepository studentRepository,
+            ICourseRepository courseRepository,
             IMapper mapper)
         {
             _enrollmentRepository = enrollmentRepository;
@@ -65,6 +65,13 @@ namespace Mastermind.Education.Services.ApplicationCore.Services
         {
             await _enrollmentRepository.DeleteAsync(enrollment);
         }
+
+        public async Task UpdateAsync(Enrollment enrollment)
+        {
+            await _enrollmentRepository.UpdateAsync(enrollment);
+
+        }
+
 
     }
 

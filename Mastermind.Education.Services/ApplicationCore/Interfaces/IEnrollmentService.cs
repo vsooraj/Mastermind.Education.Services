@@ -10,5 +10,6 @@ namespace Mastermind.Education.Services.ApplicationCore.Interfaces
         Task<Enrollment> AddAsync(Enrollment student);
         Task<IEnumerable<EnrollmentViewModel>> ListAllAsync();
         Task DeleteAsync(Enrollment newEnrollment);
+        Task UpdateAsync(Enrollment newEnrollment);
     }
 }

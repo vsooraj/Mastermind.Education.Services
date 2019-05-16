@@ -19,6 +19,7 @@ import { CourseService } from './services/course.service';
 import { EnrollmentService } from './services/enrollment.service';
 import { StudentService } from './services/student.service';
 import { ToastyModule } from 'ng2-toasty';
+import { FilterPipe } from './filter/filter.pipe';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { ToastyModule } from 'ng2-toasty';
     FetchDataComponent, 
     CourseComponent,
     EnrollmentComponent,
-    StudentComponent,
+    StudentComponent, FilterPipe
   ],
   imports: [
     ToastyModule.forRoot(),

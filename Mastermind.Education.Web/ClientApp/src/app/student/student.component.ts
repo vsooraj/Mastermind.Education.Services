@@ -12,12 +12,6 @@ export class StudentComponent implements OnInit {
  
   public students: Student[];
 
-  //constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-  //  http.get<Student[]>('http://localhost:58789/api/student/').subscribe(result => {
-  //    this.students = result;
-  //  }, error => console.error(error));
-  //}
-
   constructor(private studentService: StudentService) { }
 
   ngOnInit() {

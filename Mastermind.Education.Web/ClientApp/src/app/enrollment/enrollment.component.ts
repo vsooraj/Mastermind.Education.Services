@@ -2,12 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { SaveEnrollment, Enrollment } from './../models/enrollment';
-
 import { EnrollmentService } from './../services/enrollment.service';
 import { Student } from '../models/student';
 import { Course, Grade } from '../models/course';
+import { Pipe, PipeTransform } from '@angular/core';
 
 
 
@@ -15,91 +14,82 @@ import { Course, Grade } from '../models/course';
   selector: 'app-enrollment-component',
   templateUrl: './enrollment.component.html'
 })
-export class EnrollmentComponent implements OnInit {
+export class EnrollmentComponent implements OnInit, PipeTransform {
+  transform(items: any[], searchText: string): any[] {
 
-  grades: Grade[] = [
+    if (!items) {
+      return [];
+    }
+    if (!searchText) {
+      return items;
+    }
+    searchText = searchText.toLowerCase();
+
+    return items.filter(it => {
+      return it.toLowerCase().includes(searchText);
+    });
+  }
+
+
+  grades: any[] = [
     { id: "A"},
     { id: "B"},
     { id: "C"}
   ];
 
-  courses: Course[] = [
-    { id: 1, name: "C#", noOfDays:30},
-    { id: 2, name: "Angualr", noOfDays:60},
-    { id: 3, name: ".NET Core", noOfDays:90}
-  ];
-  
-   
-  students: Student[] = [
-    { id: 1, name: "Jon Doe" },
-    { id: 2, name: "Jane Doe" },
-    { id: 3, name: "Willy Doe" }
-  ];
-  noOfDays: any[] = [
-    { id: 30, title: " 30" },
-    { id: 60, title: " 60" },
-    { id: 90, title: " 90" }
-  ];
-
+  courses: Course[];
+  searchCourses: Course[];   
+  students: Student[];
 
   enrollment: SaveEnrollment = {
     id: null,
     courseId: 0,
     studentId: 0,
-    noOfDays: 30,
+    noOfDays: 0,
     grade: 'A'
 
   };
 
-  public enrollments: Enrollment[];
+  private setEnrollment(v: Enrollment) {
+    this.enrollment.id = v.id;
+    this.enrollment.courseId = v.courseId;
+    this.enrollment.studentId = v.studentId;
+    this.enrollment.noOfDays = v.noOfDays;
+    this.enrollment.grade = v.grade;
 
-  constructor(private enrollmentService: EnrollmentService) { }
+    this.isNewRecord = false;
+  } 
+
+  public enrollments: Enrollment[];
+  public cacheEnrollments: Enrollment[];
+
+  isNewRecord: boolean=true;
+  statusMessage: string;
+
+  constructor(private enrollmentService: EnrollmentService,
+    private router: Router) { }
   ngOnInit() {
     this.fetchData();
-    //this.grades = this.enrollmentService.getGrades();
-    //this.courses = this.enrollmentService.getCourses();
   }
-  //ngOnInit() {
-  //  var sources = [
-  //    this.enrollmentService.getGrades(),
-  //    this.enrollmentService.getCourses(),
-  //    this.enrollmentService.getEnrollments(),
-  //  ];
 
-  //  if (this.enrollment.id)
-  //    sources.push(this.enrollmentService.getEnrollment(this.enrollment.id));    
-  //}
   onSubmit() {
     if (this.enrollment.id) {
       this.enrollmentService.update(this.enrollment)
         .subscribe(x => {
-          x => console.log(x);
-          //this.toastyService.success({
-          //  title: 'Success',
-          //  msg: 'The Enrollment was sucessfully updated.',
-          //  theme: 'bootstrap',
-          //  showClose: true,
-          //  timeout: 5000
-          //});
+          this.fetchData();
+          this.router.navigate(['/enrollment']);
         });
     }
     else {
       this.enrollmentService.create(this.enrollment)
-        .subscribe(x => console.log(x));
-
+        .subscribe(x => {         
+          this.fetchData();
+          this.router.navigate(['/enrollment']);
+        });
     }
+    
   }
 
-  //delete() {
-  //  if (confirm("Are you sure?")) {
-  //    this.enrollmentService.delete(this.enrollment.id)
-  //      .subscribe(x => {
-  //        console.log(this.enrollments);
-  //        //this.router.navigate(['/home']);
-  //      });
-  //    this.fetchData();
-  //  }
-  //}
 
   deleteRow(index: number) {
     this.enrollment.id = index;
@@ -107,18 +97,37 @@ export class EnrollmentComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.enrollmentService.delete(this.enrollment.id)
         .subscribe(x => {
-          console.log(this.enrollments);
-          //this.router.navigate(['/home']);
+          this.router.navigate(['/enrollment']);
+          this.fetchData();
         });
-      this.fetchData();
+      
     }
   }
   fetchData() {
-    this.enrollmentService.getEnrollments().subscribe(enrollments => {
-      this.enrollments = enrollments;
-      console.log(this.enrollments);
+    this.enrollmentService.getEnrollments().subscribe(data => {
+      this.enrollments = data.enrollments;
+      this.courses = data.courses;
+      this.students = data.students;
+      this.searchCourses = data.courses;
+      console.log(this.courses);
+      this.router.navigate(['/enrollment']);
     });
   }
+
+  public onChange(args: any): void {
+
+    this.enrollment.noOfDays = this.courses[this.courses.findIndex(x => x.id==args.target.value)].noOfDays;   
+    
+  }
+
+  filterEnrollments(filterVal: any) {
+    if (filterVal == "0")
+      this.enrollments = this.cacheEnrollments;
+    else
+      this.enrollments = this.cacheEnrollments.filter((item) => item.courseId == filterVal);
+  }
+ 
+
 }
 
 
